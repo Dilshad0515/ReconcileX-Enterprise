@@ -50,6 +50,10 @@ public class SourceTransaction {
     protected SourceTransaction() {
     }
 
+    public SourceTransaction(ImportBatch importBatch) {
+        this.importBatch = importBatch;
+    }
+
     public Long getId() {
         return id;
     }

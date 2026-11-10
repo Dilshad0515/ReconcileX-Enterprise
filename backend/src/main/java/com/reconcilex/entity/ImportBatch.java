@@ -36,8 +36,21 @@ public class ImportBatch {
 
     @Column(name = "imported_at", nullable = false, insertable = false, updatable = false)
     private OffsetDateTime importedAt;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uploaded_by_user_id")
+    private AppUser uploadedBy;
 
     protected ImportBatch() {
+    }
+
+    public ImportBatch(DataSource dataSource, String fileName, String fileHash) {
+        this.dataSource = dataSource;
+        this.fileName = fileName;
+        this.fileHash = fileHash;
+        this.batchStatus = "PENDING";
+        this.totalRows = 0;
+        this.successfulRows = 0;
+        this.failedRows = 0;
     }
 
     public Long getId() {
@@ -102,5 +115,13 @@ public class ImportBatch {
 
     public OffsetDateTime getImportedAt() {
         return importedAt;
+    }
+
+    public AppUser getUploadedBy() {
+        return uploadedBy;
+    }
+
+    public void setUploadedBy(AppUser uploadedBy) {
+        this.uploadedBy = uploadedBy;
     }
 }
